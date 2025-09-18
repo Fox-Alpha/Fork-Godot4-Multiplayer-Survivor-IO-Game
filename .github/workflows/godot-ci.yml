@@ -1,20 +1,24 @@
 name: godot-ci export
-on: push
+on:
+  push:
+    branches:
+      - main
+      - 'releases/**'
 permissions:
   contents: write
   pull-requests: write
 
 env:
-  GODOT_VERSION: 4.3
+  GODOT_VERSION: 4.5
   EXPORT_NAME: io
   PROJECT_PATH: ./
 
 jobs:
   export-web:
     name: Web Export
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-24.04
     container:
-      image: barichello/godot-ci:4.3
+      image: barichello/godot-ci:4.5
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -46,9 +50,9 @@ jobs:
           
   export-arm64:
     name: ARM64 Export
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-24.04
     container:
-      image: barichello/godot-ci:4.3
+      image: barichello/godot-ci:4.5
     steps:
       - name: Checkout
         uses: actions/checkout@v4
