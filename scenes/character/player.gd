@@ -1,3 +1,4 @@
+# godot 4.3
 extends CharacterBody2D
 
 signal mob_killed
@@ -35,7 +36,11 @@ var equippedItem : String:
 		$PlayerUi.setHPBarRatio(hp/maxHP)
 		if hp <= 0:
 			die()
-@export var speed := 200
+@export var base_speed := 167
+@export var speed := base_speed
+var stamina: float = Constants.MAX_STAMINA
+var is_running: bool = false
+var can_run: bool = true
 var spawnsProjectile := ""
 @export var attackDamage := 10:
 	get:
@@ -49,11 +54,10 @@ var damageType := "normal":
 			return Items.equips[equippedItem]["damageType"]
 		else:
 			return damageType
-var attackRange := 1.0:
+var attackRange := 60.0:
 	set(value):
-		var clampedVal = clampf(value, 1.0, 5.0)
-		attackRange = clampedVal
-		%HitCollision.shape.height = 20 * clampedVal
+		attackRange = value
+		%HitCollision.shape.height = 20 * value
 
 func _ready():
 	if multiplayer.is_server():
@@ -65,6 +69,15 @@ func _ready():
 		inventory = get_parent().get_parent().get_node("HUD/Inventory")
 		inventory.player = self
 		$Camera2D.enabled = true
+		# Set up debug camera if debug settings are available
+		if Multihelper.debug_camera_settings != null and Multihelper.debug_camera_settings.has("zoom"):
+			$Camera2D.zoom = Vector2(8, 8)  # Fixed zoom to show the whole map
+		# Set up audio players for local player
+		$FootstepsAudioPlayer.queue_free()  # Remove the normal footsteps player
+		$AnimationPlayer.get_animation("walking").track_set_path(1, NodePath("OwnFootstepsPlayer"))
+	else:
+		# For other players, remove the own footsteps player
+		$OwnFootstepsPlayer.queue_free()
 	Multihelper.player_disconnected.connect(disconnected)
 
 func visibilityFilter(id):
@@ -86,18 +99,38 @@ func disconnected(id):
 	
 func _process(_delta):
 	if str(multiplayer.get_unique_id()) == name:
-		var vel = Input.get_vector("walkLeft", "walkRight", "walkUp", "walkDown") * speed
+		var base_vel = Input.get_vector("walkLeft", "walkRight", "walkUp", "walkDown")
+		
+		# Handle running
+		if Input.is_action_pressed("run") and can_run and stamina > Constants.MIN_STAMINA_TO_RUN:
+			is_running = true
+			stamina = max(0.0, stamina - Constants.STAMINA_DRAIN_RATE * _delta)
+			speed = int(base_speed * Constants.RUN_SPEED_MULTIPLIER)
+		else:
+			is_running = false
+			stamina = min(Constants.MAX_STAMINA, stamina + Constants.STAMINA_REGEN_RATE * _delta)
+			speed = int(base_speed)
+			
+		# Prevent running if stamina is too low
+		if stamina <= Constants.MIN_STAMINA_TO_RUN:
+			can_run = false
+		elif stamina >= Constants.MIN_STAMINA_TO_RUN * 2:
+			can_run = true
+			
+		var vel = base_vel * speed
 		var mouse_position = get_global_mouse_position()
 		var direction_to_mouse = mouse_position - global_position
 		var angle = direction_to_mouse.angle()
 		var doingAction = Input.is_action_pressed("leftClickAction")
+		
 		#Apply local movement
 		moveProcess(vel, angle, doingAction)
 		#Send input to server for replication
 		var inputData = {
 			"vel": vel,
 			"angle": angle,
-			"doingAction": doingAction
+			"doingAction": doingAction,
+			"is_running": is_running
 		}
 		sendInputstwo.rpc_id(1, inputData)
 		sendPos.rpc(position)
@@ -108,8 +141,9 @@ func sendInputstwo(data):
 
 @rpc("any_peer", "call_local", "reliable")
 func moveServer(vel, angle, doingAction):
+	velocity = vel  # Set velocity for animation state
 	$MovingParts.rotation = angle
-	handleAnims(vel,doingAction)
+	handleAnims(vel, doingAction)
 
 @rpc("any_peer", "call_local", "reliable")
 func sendPos(pos):
@@ -120,18 +154,19 @@ func moveProcess(vel, angle, doingAction):
 	if velocity != Vector2.ZERO:
 		move_and_slide()
 	$MovingParts.rotation = angle
-	handleAnims(vel,doingAction)
+	handleAnims(vel, doingAction)
 
 func handleAnims(vel, doing_action):
 	if doing_action:
 		var action_anim = Items.equips[equippedItem]["attack"] if equippedItem else "punching"
 		if !$AnimationPlayer.is_playing() or $AnimationPlayer.current_animation != action_anim:
 			$AnimationPlayer.play(action_anim)
-	elif vel != Vector2.ZERO:
+	elif vel.length() > 10.0:  # Small threshold to account for floating point imprecision
 		if !$AnimationPlayer.is_playing() or $AnimationPlayer.current_animation != "walking":
 			$AnimationPlayer.play("walking")
 	else:
-		$AnimationPlayer.stop()
+		if $AnimationPlayer.current_animation == "walking":
+			$AnimationPlayer.stop()
 
 func _on_next_item():
 	inventory.nextSelection()

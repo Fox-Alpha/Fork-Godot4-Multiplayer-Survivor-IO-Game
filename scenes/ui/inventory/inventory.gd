@@ -1,3 +1,4 @@
+# godot 4.3
 extends Control
 
 signal selectionChanged
@@ -123,5 +124,3 @@ func closeRecipe():
 
 func _on_startcraft_button_pressed():
 	Inventory.tryCraftItem.rpc_id(1, str(multiplayer.get_unique_id()), selectedRecipe)
-
-

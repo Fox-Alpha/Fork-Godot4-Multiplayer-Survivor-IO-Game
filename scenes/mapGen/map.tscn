@@ -6,8 +6,7 @@
 [node name="Map" type="Node2D"]
 script = ExtResource("1_gggpt")
 
-[node name="TileMap" type="TileMapLayer" parent="."]
-use_parent_material = true
+[node name="TileMap" type="TileMap" parent="."]
 tile_set = ExtResource("2_c3hbg")
-rendering_quadrant_size = 64
-navigation_visibility_mode = 1
+format = 2
+layer_0/name = "Ground"
