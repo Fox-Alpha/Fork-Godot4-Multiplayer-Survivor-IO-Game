@@ -1,7 +1,7 @@
-[gd_scene load_steps=4 format=3]
+[gd_scene load_steps=4 format=3 uid="uid://ehwdtyx5ivl"]
 
-[ext_resource type="Script" path="res://scenes/ui/spawn/spawnPlayer.gd" id="1_script"]
-[ext_resource type="Texture2D" path="res://assets/characters/bodies/1.png" id="2_body"]
+[ext_resource type="Script" uid="uid://dt2j56vkr5e12" path="res://scenes/ui/spawn/spawnPlayer.gd" id="1_script"]
+[ext_resource type="Texture2D" uid="uid://5qabg21nph26" path="res://assets/characters/bodies/1.png" id="2_body"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qdlud"]
 bg_color = Color(0.180392, 0.180392, 0.180392, 1)

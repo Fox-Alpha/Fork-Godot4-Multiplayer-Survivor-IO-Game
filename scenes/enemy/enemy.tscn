@@ -1,8 +1,8 @@
-[gd_scene load_steps=3 format=3]
+[gd_scene load_steps=2 format=3 uid="uid://jk7h882ggec6"]
 
-[ext_resource type="Texture2D" path="res://assets/characters/enemy/zombie.png" id="1_zombie"]
-[ext_resource type="AudioStream" path="res://assets/sfx/step.ogg" id="2_step"]
+[ext_resource type="Script" uid="uid://hsm0xlqtjp44" path="res://scenes/enemy/enemy.gd" id="1_4a83h"]
 
 [node name="Enemy" type="CharacterBody2D"]
 collision_layer = 4
 collision_mask = 7
+script = ExtResource("1_4a83h")

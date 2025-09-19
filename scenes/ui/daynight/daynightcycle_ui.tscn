@@ -1,9 +1,9 @@
-[gd_scene load_steps=10 format=3]
+[gd_scene load_steps=10 format=3 uid="uid://dljcab1818oqv"]
 
-[ext_resource type="Script" path="res://scenes/ui/daynight/daynightcycle_ui.gd" id="1_script"]
-[ext_resource type="Shader" path="res://assets/daynight/pixelperfect.gdshader" id="2_shader"]
-[ext_resource type="FontFile" path="res://assets/fonts/pixelmix.ttf" id="3_font"]
-[ext_resource type="Texture2D" path="res://assets/daynight/daynightcycle-ui.png" id="4_texture"]
+[ext_resource type="Script" uid="uid://5el5evngba44" path="res://scenes/ui/daynight/daynightcycle_ui.gd" id="1_script"]
+[ext_resource type="Shader" uid="uid://uwn2ars3haw2" path="res://assets/daynight/pixelperfect.gdshader" id="2_shader"]
+[ext_resource type="FontFile" uid="uid://pqowcapwmd0j" path="res://assets/fonts/pixelmix.ttf" id="3_font"]
+[ext_resource type="Texture2D" uid="uid://bhp5mni1l8nd7" path="res://assets/daynight/daynightcycle-ui.png" id="4_texture"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_qhbnj"]
 shader = ExtResource("2_shader")
@@ -57,7 +57,7 @@ metadata/_edit_lock_ = true
 
 [node name="DayLabel" type="Label" parent="CenterContainerDay/DayLabelBackground"]
 unique_name_in_owner = true
-layout_mode = 2
+layout_mode = 0
 offset_top = -1.0
 offset_right = 33.0
 offset_bottom = 10.0
@@ -85,7 +85,7 @@ metadata/_edit_lock_ = true
 
 [node name="TimeLabel" type="Label" parent="CenterContainerTime/TimeLabelBackground"]
 unique_name_in_owner = true
-layout_mode = 2
+layout_mode = 0
 offset_top = -1.0
 offset_right = 41.0
 offset_bottom = 10.0
