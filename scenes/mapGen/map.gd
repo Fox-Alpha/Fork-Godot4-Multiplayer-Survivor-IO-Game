@@ -1,12 +1,12 @@
 # godot 4.3
 extends Node2D
 
-var map_width = 100
-var map_height = 100
+var map_width = 64
+var map_height = 64
 
 var tileset_source = 1  # This matches the source ID in the tileset
 
-@onready var tile_map: TileMap = $TileMap  # The TileMap node
+@onready var tile_map: TileMapLayer = $TileMap  # The TileMap node
 
 var grassAtlasCoords = [Vector2i(0,0), Vector2i(1,0), Vector2i(2,0), Vector2i(3,0)]
 var waterCoors = [Vector2i(18,0), Vector2i(19,0)]
@@ -74,7 +74,7 @@ func clear_map():
 	walkable_tiles.clear()
 	for x in range(map_width):
 		for y in range(map_height):
-			tile_map.erase_cell(0, Vector2i(x, y))
+			tile_map.erase_cell(Vector2i(x, y))
 
 @rpc("any_peer", "call_remote", "reliable")
 func request_map_data():
@@ -158,8 +158,8 @@ func sync_full_map(map_tiles: Array):
 		var terrain_type = tile[2]
 		
 		if pos.x >= 0 and pos.x < map_width and pos.y >= 0 and pos.y < map_height:
-			tile_map.set_cell(0, pos, tileset_source, atlas_coords)
-			var new_source_id = tile_map.get_cell_source_id(0, pos)
+			tile_map.set_cell(pos, tileset_source, atlas_coords)
+			var new_source_id = tile_map.get_cell_source_id(pos)
 			
 			if new_source_id == -1:
 				errors += 1
@@ -191,10 +191,10 @@ func generateMap():
 	
 	# Clear any invalid tiles from walkable_tiles
 	walkable_tiles = walkable_tiles.filter(func(pos): 
-		var tile_data = tile_map.get_cell_tile_data(0, pos)
+		var tile_data = tile_map.get_cell_tile_data(pos)
 		if !tile_data:  # No tile at this position
 			return false
-		var coords = tile_map.get_cell_atlas_coords(0, pos, false)
+		var coords = tile_map.get_cell_atlas_coords(pos)
 		return not waterCoors.has(coords)
 	)
 	
@@ -239,16 +239,16 @@ func generate_terrain():
 	for pos in terrain_types:
 		match terrain_types[pos]:
 			"grass":
-				tile_map.set_cell(0, pos, tileset_source, grassAtlasCoords.pick_random())
+				tile_map.set_cell(pos, tileset_source, grassAtlasCoords.pick_random())
 				tiles_set += 1
 			"water":
-				tile_map.set_cell(0, pos, tileset_source, waterCoors.pick_random())
+				tile_map.set_cell(pos, tileset_source, waterCoors.pick_random())
 				tiles_set += 1
 			"sand":
-				tile_map.set_cell(0, pos, tileset_source, sandCoords.pick_random())
+				tile_map.set_cell(pos, tileset_source, sandCoords.pick_random())
 				tiles_set += 1
 			"cement":
-				tile_map.set_cell(0, pos, tileset_source, cementCoords.pick_random())
+				tile_map.set_cell(pos, tileset_source, cementCoords.pick_random())
 				tiles_set += 1
 	
 	print("Tiles set in tilemap: ", tiles_set)
