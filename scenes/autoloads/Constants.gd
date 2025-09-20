@@ -2,15 +2,15 @@
 extends Node
 
 #Multiplayer
-const SERVER_IP := "io.lan.247420.xyz"
-const PORT := 8443
+const SERVER_IP := "localhost"
+const PORT := 21277
 #const PORT := 8443
 const USE_SSL := false # put certs in assets/certs, a free let's encrypt one works for itch.io
 const TRUSTED_CHAIN_PATH := ""
 const PRIVATE_KEY_PATH := ""
 
 #Map
-const MAP_SIZE := Vector2i(128,128) # see map.gd for tileset specific constants
+const MAP_SIZE := Vector2i(64,64) # see map.gd for tileset specific constants
 const MAX_OBJECTS := 30
 const MAX_ENEMIES_PER_PLAYER := 2 # see main.gd for more object and enemy spawner constants
 
