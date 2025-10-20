@@ -1,6 +1,6 @@
 # godot 4.3
 extends Node2D
-
+#region HEAD
 var map_width = 64
 var map_height = 64
 
@@ -22,14 +22,18 @@ var noise = FastNoiseLite.new()
 # Noise parameters
 var tile_size = 64
 
+#endregion
+
+
 func _ready():
 	print("Map _ready called, is_server: ", multiplayer.is_server())
+
 	# Verify TileMap references
 	if !tile_map:
 		push_error("TileMap node not found!")
 		print("tile_map: ", tile_map)
 		return
-		
+
 	# Verify tileset source
 	if !tile_map.tile_set or !tile_map.tile_set.has_source(tileset_source):
 		push_error("TileMap is missing required tileset source: ", tileset_source)
@@ -38,7 +42,7 @@ func _ready():
 			has_source = tile_map.tile_set.has_source(tileset_source)
 		print("tile_set: ", tile_map.tile_set, ", has_source: ", has_source)
 		return
-		
+
 	# Initialize noise for tinting - use same settings as terrain generation
 	noise.noise_type = FastNoiseLite.TYPE_PERLIN
 	noise.fractal_octaves = 4
@@ -46,7 +50,7 @@ func _ready():
 	noise.frequency = 0.02
 	noise.seed = Multihelper.mapSeed
 	print("Map initialized with seed: ", Multihelper.mapSeed)
-	
+
 	# Only generate if we're the server
 	if multiplayer.is_server():
 		print("Server generating initial map")
@@ -55,6 +59,8 @@ func _ready():
 		print("Client waiting for map data")
 		initialize_client()
 
+## Client beginn to initialize the Map
+## Request Map Data from Server
 func initialize_client():
 	print("Client initializing map")
 	if !tile_map:
@@ -65,11 +71,12 @@ func initialize_client():
 	print("Client requesting map data from server")
 	request_map_data.rpc_id(1)
 
+## Clear the Map to prepare new Map Data
 func clear_map():
 	if !tile_map:
 		push_error("Cannot clear map - TileMap node not found!")
 		return
-		
+
 	terrain_data.clear()
 	walkable_tiles.clear()
 	for x in range(map_width):
@@ -176,6 +183,7 @@ func sync_full_map(map_tiles: Array):
 	print("- Tiles placed: ", tiles_placed)
 	print("- Errors: ", errors)
 	print("- Terrain data size: ", terrain_data.size())
+
 	
 	if tiles_placed == 0:
 		print("Warning: No tiles were placed! Requesting map data again...")
@@ -206,6 +214,7 @@ func generateMap():
 @rpc("authority", "call_remote", "reliable")
 func sync_walkable_tiles(tiles: Array):
 	walkable_tiles = tiles
+
 
 @rpc("authority", "call_remote", "reliable")
 func sync_terrain_data(data: Dictionary):
