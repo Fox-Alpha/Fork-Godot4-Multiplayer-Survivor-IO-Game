@@ -1,6 +1,6 @@
 # godot 4.3
 extends Node2D
-
+#region HEAD
 var map_width = 64
 var map_height = 64
 
@@ -22,15 +22,18 @@ var noise = FastNoiseLite.new()
 # Noise parameters
 var tile_size = 64
 
+#endregion
+
 
 func _ready():
 	print("Map _ready called, is_server: ", multiplayer.is_server())
+
 	# Verify TileMap references
 	if !tile_map:
 		push_error("TileMap node not found!")
 		print("tile_map: ", tile_map)
 		return
-		
+
 	# Verify tileset source
 	if !tile_map.tile_set or !tile_map.tile_set.has_source(tileset_source):
 		push_error("TileMap is missing required tileset source: ", tileset_source)
@@ -39,7 +42,7 @@ func _ready():
 			has_source = tile_map.tile_set.has_source(tileset_source)
 		print("tile_set: ", tile_map.tile_set, ", has_source: ", has_source)
 		return
-		
+
 	# Initialize noise for tinting - use same settings as terrain generation
 	noise.noise_type = FastNoiseLite.TYPE_PERLIN
 	noise.fractal_octaves = 4
@@ -47,7 +50,7 @@ func _ready():
 	noise.frequency = 0.02
 	noise.seed = Multihelper.mapSeed
 	print("Map initialized with seed: ", Multihelper.mapSeed)
-	
+
 	# Only generate if we're the server
 	if multiplayer.is_server():
 		print("Server generating initial map")
@@ -56,7 +59,8 @@ func _ready():
 		print("Client waiting for map data")
 		initialize_client()
 
-
+## Client beginn to initialize the Map
+## Request Map Data from Server
 func initialize_client():
 	print("Client initializing map")
 	if !tile_map:
@@ -67,12 +71,12 @@ func initialize_client():
 	print("Client requesting map data from server")
 	request_map_data.rpc_id(1)
 
-
+## Clear the Map to prepare new Map Data
 func clear_map():
 	if !tile_map:
 		push_error("Cannot clear map - TileMap node not found!")
 		return
-		
+
 	terrain_data.clear()
 	walkable_tiles.clear()
 	for x in range(map_width):
@@ -89,11 +93,11 @@ func generateMap():
 	
 	# Clear any invalid tiles from walkable_tiles
 	walkable_tiles = walkable_tiles.filter(func(pos): 
-		var tile_data = tile_map.get_cell_tile_data(pos)
-		if !tile_data:  # No tile at this position
-			return false
+		# get Tile Atlas Coordinates from Tile at "pos"
 		var coords = tile_map.get_cell_atlas_coords(pos)
-		return not waterCoors.has(coords)
+		# return false, if no tile is present vector2i(-1, -1) // EmptyCell
+		# return true, if coords not in waterTileList
+		return false if coords < Vector2i.ZERO else not waterCoors.has(coords)
 	)
 	
 	# If we're the server, sync walkable tiles and terrain data to clients
@@ -159,26 +163,30 @@ func send_full_map_to_client(peer_id: int):
 		return
 		
 	print("Preparing map data for client ", peer_id)
-	var map_tiles = []
+	var _map_tiles = []
 	var total_cells = 0
 	var valid_cells = 0
+	
+	var map_tiles_pba = []
 	
 	for y in range(map_height):
 		for x in range(map_width):
 			total_cells += 1
 			var pos = Vector2i(x, y)
-			var source_id = tile_map.get_cell_source_id(0, pos)
+			var source_id = tile_map.get_cell_source_id(pos)
 			if source_id != -1:  # If tile exists
 				valid_cells += 1
-				var atlas_coords = tile_map.get_cell_atlas_coords(0, pos, false)
+				var atlas_coords = tile_map.get_cell_atlas_coords(pos)
 				var terrain_type = terrain_data.get(pos, "")
-				map_tiles.append([pos, atlas_coords, terrain_type])
+				map_tiles_pba.append([pos, atlas_coords, terrain_type])
+				#map_tiles.append([pos, atlas_coords, terrain_type])
 	
 	print("Server checked ", total_cells, " cells, found ", valid_cells, " valid cells")
-	print("Server sending ", map_tiles.size(), " tiles to client ", peer_id)
+	print("Server sending ", map_tiles_pba.size(), " tiles to client ", peer_id)
 	print("Current terrain_data size: ", terrain_data.size())
 	
-	if map_tiles.size() == 0:
+	#if map_tiles.size() == 0:
+	if map_tiles_pba.size() == 0:
 		push_error("No tiles to send! Map may not be generated yet.")
 		print("Attempting to regenerate map...")
 		generateMap()
@@ -186,16 +194,36 @@ func send_full_map_to_client(peer_id: int):
 		for y in range(map_height):
 			for x in range(map_width):
 				var pos = Vector2i(x, y)
-				var source_id = tile_map.get_cell_source_id(0, pos)
+				var source_id = tile_map.get_cell_source_id(pos)
 				if source_id != -1:
-					var atlas_coords = tile_map.get_cell_atlas_coords(0, pos, false)
+					var atlas_coords = tile_map.get_cell_atlas_coords(pos)
 					var terrain_type = terrain_data.get(pos, "")
-					map_tiles.append([pos, atlas_coords, terrain_type])
-		print("After regeneration: ", map_tiles.size(), " tiles")
+					#var pba = [pos, atlas_coords, terrain_type]
+					
+					#map_tiles_pba.append_array(pba)
+					map_tiles_pba.append([pos, atlas_coords, terrain_type])
+		print("After regeneration: ", map_tiles_pba.size(), " tiles")
 	
-	if map_tiles.size() > 0:
-		print("First tile data: pos=", map_tiles[0][0], " atlas=", map_tiles[0][1], " type=", map_tiles[0][2])
-		sync_full_map.rpc_id(peer_id, map_tiles)
+	if map_tiles_pba.size() > 0:
+		print("First tile data: pos=", map_tiles_pba[0][0], " atlas=", map_tiles_pba[0][1], " type=", str(map_tiles_pba[0][2]))
+		#print("Data to send MapData Size: " + str(map_tiles.size()))
+		print("Data to send MapData Size (pba): " + str(map_tiles_pba.size()))
+		#multiplayer.multiplayer_peer.set_target_peer(peer_id)
+		#multiplayer.multiplayer_peer.var(map_tiles_pba)
+		var _ibb = multiplayer.multiplayer_peer.get_inbound_buffer_size()
+		var _obb = multiplayer.multiplayer_peer.get_outbound_buffer_size()
+		#var mod_1024 := map_tiles_pba.size() % 1000
+		
+		for i in range(0,map_tiles_pba.size(),1024):
+			print("Step map Size ", i, "/", i+1024-1)
+			#sync_full_map.rpc_id(peer_id, map_tiles_pba.slice(i,i+1024-1))
+		
+		#sync_full_map.rpc_id(peer_id, map_tiles_pba.slice(0, 1023))
+		sync_full_map.rpc_id(peer_id, map_tiles_pba.slice(1024, 2047))
+		sync_full_map.rpc_id(peer_id, map_tiles_pba.slice(2048, 3071))
+		#sync_full_map.rpc_id(peer_id, map_tiles_pba.slice(3072, 4096))
+		
+		
 		sync_walkable_tiles.rpc_id(peer_id, walkable_tiles)
 	else:
 		push_error("Still no tiles after regeneration attempt!")
@@ -215,12 +243,21 @@ func request_map_data():
 
 
 @rpc("authority", "call_remote", "reliable")
+#func sync_full_map(map_tiles: Array):
 func sync_full_map(map_tiles: Array):
+		
+	#print("Client received map data with ", map_tiles_pba.size(), "(PackedByteArray) tiles")
+	var _ibb = multiplayer.multiplayer_peer.get_inbound_buffer_size()
+	var _obb = multiplayer.multiplayer_peer.get_outbound_buffer_size()
+
+	# TODO:
+	#var map_tiles := map_tiles_pba
+
+	print("Client received map data with ", map_tiles.size(), " tiles")
+	
 	if !tile_map:
 		push_error("Cannot sync map - TileMap node not found!")
 		return
-		
-	print("Client received map data with ", map_tiles.size(), " tiles")
 	clear_map()
 	
 	# map_tiles is array of [pos, atlas_coords, terrain_type]
@@ -251,11 +288,13 @@ func sync_full_map(map_tiles: Array):
 	print("- Tiles placed: ", tiles_placed)
 	print("- Errors: ", errors)
 	print("- Terrain data size: ", terrain_data.size())
+
 	
 	if tiles_placed == 0:
 		print("Warning: No tiles were placed! Requesting map data again...")
 		await get_tree().create_timer(1.0).timeout
 		request_map_data.rpc_id(1)
+	pass
 
 
 @rpc("authority", "call_remote", "reliable")
@@ -266,3 +305,4 @@ func sync_walkable_tiles(tiles: Array):
 @rpc("authority", "call_remote", "reliable")
 func sync_terrain_data(data: Dictionary):
 	terrain_data = data
+	pass
