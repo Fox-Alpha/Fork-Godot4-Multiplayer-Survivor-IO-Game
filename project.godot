@@ -11,10 +11,10 @@ config_version=5
 [application]
 
 config/name="Survivor IO"
+config/tags=PackedStringArray("2d", "develop", "godot4.5", "projekt", "stable")
 run/main_scene="res://scenes/game/Game.tscn"
 config/features=PackedStringArray("4.5", "GL Compatibility")
 config/icon="res://icon.svg"
-config/tags=PackedStringArray("2d", "develop", "godot4.5", "projekt", "stable")
 
 [autoload]
 
