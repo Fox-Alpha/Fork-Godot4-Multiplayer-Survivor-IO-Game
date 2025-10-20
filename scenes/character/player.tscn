@@ -1,15 +1,15 @@
-[gd_scene load_steps=14 format=3]
+[gd_scene load_steps=16 format=3 uid="uid://5w8x65uy5ud7"]
 
-[ext_resource type="Script" path="res://scenes/character/player.gd" id="1_script"]
-[ext_resource type="Texture2D" path="res://assets/characters/bodies/4.png" id="2_body"]
-[ext_resource type="AudioStream" path="res://assets/sfx/step.ogg" id="3_step"]
+[ext_resource type="Script" uid="uid://b62ptkdpvfstc" path="res://scenes/character/player.gd" id="1_script"]
+[ext_resource type="Texture2D" uid="uid://km3sx58r5vwy" path="res://assets/characters/bodies/4.png" id="2_body"]
+[ext_resource type="AudioStream" uid="uid://djbrqfu2oaj7o" path="res://assets/sfx/step.ogg" id="3_step"]
 [ext_resource type="PackedScene" path="res://scenes/ui/player/player_ui.tscn" id="3_ui"]
-[ext_resource type="Texture2D" path="res://assets/characters/hands/hands-sheet.png" id="4_hands"]
-[ext_resource type="AudioStream" path="res://assets/sfx/swing.ogg" id="5_swing"]
+[ext_resource type="Texture2D" uid="uid://bx7fpakrdnbf3" path="res://assets/characters/hands/hands-sheet.png" id="4_hands"]
+[ext_resource type="AudioStream" uid="uid://70ym6t6pjpde" path="res://assets/sfx/swing.ogg" id="5_swing"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_khhcq"]
-height = 60.0
 radius = 40.0
+height = 80.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_cdkds"]
 radius = 16.0
@@ -241,10 +241,10 @@ tracks/3/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_4vloy"]
 _data = {
-"punching": SubResource("Animation_l6e13"),
-"stab": SubResource("Animation_oaeq3"),
-"swing": SubResource("Animation_ed68f"),
-"walking": SubResource("Animation_1ejc1")
+&"punching": SubResource("Animation_l6e13"),
+&"stab": SubResource("Animation_oaeq3"),
+&"swing": SubResource("Animation_ed68f"),
+&"walking": SubResource("Animation_1ejc1")
 }
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_1pknd"]
@@ -327,7 +327,7 @@ offset_bottom = -50.0
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
-"": SubResource("AnimationLibrary_4vloy")
+&"": SubResource("AnimationLibrary_4vloy")
 }
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
@@ -335,16 +335,13 @@ replication_config = SubResource("SceneReplicationConfig_1pknd")
 visibility_update_mode = 2
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
-bus = "AttackSounds"
 
 [node name="FootstepsAudioPlayer" type="AudioStreamPlayer2D" parent="."]
-bus = "FootstepSounds"
 volume_db = -6.0
 max_distance = 500.0
 attenuation = 2.0
 
 [node name="OwnFootstepsPlayer" type="AudioStreamPlayer2D" parent="."]
-bus = "FootstepSounds"
 volume_db = -24.0
 
 [node name="bloodParticles" type="CPUParticles2D" parent="."]
@@ -364,11 +361,11 @@ scale_amount_curve = SubResource("Curve_s5j1r")
 color = Color(1, 0.172549, 0.113725, 1)
 
 [node name="EquipmentSpawner" type="MultiplayerSpawner" parent="."]
-_spawnable_scenes = PackedStringArray("res://scenes/character/equipments/torch.tscn")
+_spawnable_scenes = PackedStringArray("uid://cv01pg7l0b1q8")
 spawn_path = NodePath("../MovingParts/Equipment")
 
 [node name="MessageSpawner" type="MultiplayerSpawner" parent="."]
-_spawnable_scenes = PackedStringArray("res://scenes/ui/chat/message_box.tscn")
+_spawnable_scenes = PackedStringArray("uid://cv8fbx1drgjch")
 spawn_path = NodePath("../PlayerMessages")
 
 [node name="PlayerMessages" type="VBoxContainer" parent="."]
