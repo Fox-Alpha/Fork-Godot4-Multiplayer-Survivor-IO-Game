@@ -19,6 +19,8 @@ const enemySpawnRadiusMax := 9
 var spawnedEnemies := {}
 var boss_spawned := false  # Track if boss is spawned for current day
 
+@onready var world_map: TileMapLayer = $Map/TileMap
+
 func _ready():
 	if multiplayer.is_server():
 		Multihelper.loadMap()
@@ -29,6 +31,25 @@ func _ready():
 	$dayNight.time_tick.connect(%DayNightCycleUI.set_daytime)
 	Multihelper.player_spawned.connect(_on_player_spawned)
 	createHUD()
+
+
+func ViewPortSizeChanged() -> void:
+	if not self.multiplayer.is_server():
+		return
+	var camera = get_viewport().get_camera_2d()
+	camera.global_position = world_map.get_used_rect().get_center() * 64
+	var cam_vps : Vector2 = camera.get_viewport().size
+	var map_size_in_px : Vector2 = Vector2i(64*64+100, 64*64+100)
+	camera.zoom.x = cam_vps.x / map_size_in_px.x
+	camera.zoom.y = cam_vps.y / map_size_in_px.y
+	
+	print()
+	print("#### Map::ViewPortSizeChanged() => ", get_viewport().get_visible_rect(), " ####")
+	print("Cam Position: ", camera.global_position)
+	print("Cam Zoom: ", camera.zoom)
+	print("Cam ViewPortSize: ", cam_vps)
+	pass
+
 
 func _on_time_tick(day: int, hour: int, _minute: int):
 	if day != current_day:
@@ -42,9 +63,18 @@ func _on_time_tick(day: int, hour: int, _minute: int):
 func setupServerCamera():
 	var camera := Camera2D.new()
 	camera.enabled = true
-	camera.zoom = SERVER_CAMERA_ZOOM
-	camera.position = Vector2(Constants.MAP_SIZE * 64) / 2
+	#camera.position = Vector2(Constants.MAP_SIZE * 64) / 2
+	camera.global_position = world_map.get_used_rect().get_center() * 64
 	add_child(camera)
+	#camera.zoom = SERVER_CAMERA_ZOOM
+	var cam_vps : Vector2 = camera.get_viewport().size
+	var map_size_in_px : Vector2 = Vector2i(Constants.MAP_SIZE.x * 64 +100, Constants.MAP_SIZE.y * 64 +100)
+	camera.zoom.x = cam_vps.x / map_size_in_px.x
+	camera.zoom.y = cam_vps.y / map_size_in_px.y
+	print("Map::ViewPortSizeChanged() visible_rect => ", get_viewport().get_visible_rect())
+	print("Cam Position: ", camera.global_position)
+	print("Cam ViewPortSize: ", cam_vps)
+	print("Cam Zoom: ", camera.zoom)
 
 func createHUD():
 	var hudScene := preload("res://scenes/ui/playersList/generalHud.tscn")
