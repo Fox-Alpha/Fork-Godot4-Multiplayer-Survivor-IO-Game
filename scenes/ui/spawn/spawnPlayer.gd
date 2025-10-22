@@ -8,6 +8,8 @@ var charactersLen = 9
 func _ready():
 	if retry:
 		%RetryWindow.visible = true
+	if OS.has_feature("editor"):
+		%nameInput.text = "DEBUG"
 	setActiveCharacter()
 
 func _on_button_pressed():
@@ -28,4 +30,6 @@ func _on_next_character_button_pressed():
 	setActiveCharacter()
 
 func setActiveCharacter():
+	if OS.has_feature("editor"):
+		selectedCharacterIndex = 2
 	%selectedBody.texture = load(charactersFolder+str(selectedCharacterIndex)+".png")
