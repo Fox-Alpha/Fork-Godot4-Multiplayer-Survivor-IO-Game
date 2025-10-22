@@ -6,7 +6,7 @@ func _ready():
 	Multihelper.player_connected.connect(makePlayerList)
 	Multihelper.player_disconnected.connect(makePlayerList)
 
-func makePlayerList():
+func makePlayerList(_id:int = 0):
 	for c in %playerList.get_children():
 		c.queue_free()
 	for player in Multihelper.spawnedPlayers.keys():
