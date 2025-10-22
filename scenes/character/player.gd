@@ -98,6 +98,8 @@ func disconnected(id):
 		die()
 	
 func _process(_delta):
+	if not multiplayer.has_multiplayer_peer():
+		return
 	if str(multiplayer.get_unique_id()) == name:
 		var base_vel = Input.get_vector("walkLeft", "walkRight", "walkUp", "walkDown")
 		
