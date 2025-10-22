@@ -62,15 +62,15 @@ var circling_direction := 1  # 1 for clockwise, -1 for counter-clockwise
 var circle_radius := 40.0   # Reduced from 100.0 to stay closer
 var circle_speed_modifier := 0.5  # Reduced from 0.7 to make circling tighter
 
-@onready var anim_player = $AnimationPlayer
-@onready var footsteps_player = $FootstepsAudioPlayer
+#@onready var anim_player = $AnimationPlayer
+#@onready var footsteps_player = $FootstepsAudioPlayer
 
 func _ready():
 	# Randomly choose initial circling direction
 	circling_direction = 1 if randf() > 0.5 else -1
 	# Verify audio setup
-	print("Enemy audio setup - FootstepsAudioPlayer volume: ", footsteps_player.volume_db)
-	print("Enemy audio setup - FootstepsAudioPlayer bus: ", footsteps_player.bus)
+	#print("Enemy audio setup - FootstepsAudioPlayer volume: ", footsteps_player.volume_db)
+	#print("Enemy audio setup - FootstepsAudioPlayer bus: ", footsteps_player.bus)
 
 func _process(_delta):
 	if multiplayer.is_server():
@@ -91,19 +91,19 @@ func _process(_delta):
 			die(false)
 	
 	# Handle animations based on actual velocity
-	update_animation_state()
+	#update_animation_state()
 
-func update_animation_state():
-	var is_moving = velocity.length() > 10.0  # Small threshold to account for floating point imprecision
-	
-	if is_moving:
-		if !anim_player.is_playing() or anim_player.current_animation != "walking":
-			print("Enemy starting to walk, velocity: ", velocity.length())
-			anim_player.play("walking")
-	else:
-		if anim_player.current_animation == "walking":
-			print("Enemy stopping walk animation")
-			anim_player.stop()
+#func update_animation_state():
+	#var is_moving = velocity.length() > 10.0  # Small threshold to account for floating point imprecision
+	#
+	#if is_moving:
+		#if !anim_player.is_playing() or anim_player.current_animation != "walking":
+			#print("Enemy starting to walk, velocity: ", velocity.length())
+			#anim_player.play("walking")
+	#else:
+		#if anim_player.current_animation == "walking":
+			#print("Enemy stopping walk animation")
+			#anim_player.stop()
 
 func rotateToTarget():
 	$MovingParts.look_at(targetPlayer.position)
