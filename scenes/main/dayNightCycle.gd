@@ -29,6 +29,8 @@ func _ready() -> void:
 	time = INGAME_TO_REAL_MINUTE_DURATION * MINUTES_PER_HOUR * INITIAL_HOUR
 
 func _process(delta: float) -> void:
+	if not multiplayer.has_multiplayer_peer():
+		return
 	if multiplayer.is_server():
 		time += delta * INGAME_TO_REAL_MINUTE_DURATION * INGAME_SPEED
 
