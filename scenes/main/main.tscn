@@ -46,11 +46,11 @@ offset_right = 200.0
 offset_bottom = -30.0
 
 [node name="PlayerSpawner" type="MultiplayerSpawner" parent="."]
-_spawnable_scenes = PackedStringArray("res://scenes/character/player.tscn")
+_spawnable_scenes = PackedStringArray("uid://5w8x65uy5ud7")
 spawn_path = NodePath("../Players")
 
 [node name="EnemySpawner" type="MultiplayerSpawner" parent="."]
-_spawnable_scenes = PackedStringArray("res://scenes/enemy/enemy.tscn")
+_spawnable_scenes = PackedStringArray("uid://jk7h882ggec6")
 spawn_path = NodePath("../Enemies")
 
 [node name="ProjectileSpawner" type="MultiplayerSpawner" parent="."]
