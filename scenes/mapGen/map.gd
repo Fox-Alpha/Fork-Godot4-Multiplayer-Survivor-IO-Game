@@ -14,7 +14,7 @@ var grassAtlasCoords = [Vector2i(0,0), Vector2i(1,0), Vector2i(2,0), Vector2i(3,
 var sandCoords = [Vector2i(4,0), Vector2i(5,0), Vector2i(14,0), Vector2i(15,0)]
 var cementCoords = [Vector2i(6,0), Vector2i(7,0), Vector2i(8,0), Vector2i(9,0)]
 var wallCoords = [Vector2i(8,12)]
-var waterCoors = [Vector2i(18,0), Vector2i(19,0)]
+var waterCoords = [Vector2i(18,0), Vector2i(19,0)]
 #endregion
 
 ## Liste der Begehbaren Tiles auf der Karte
@@ -102,7 +102,7 @@ func generateMap():
 		var coords = tile_map.get_cell_atlas_coords(pos)
 		# return false, if no tile is present vector2i(-1, -1) // EmptyCell
 		# return true, if coords not in waterTileList
-		return false if coords < Vector2i.ZERO else not waterCoors.has(coords)
+		return false if coords < Vector2i.ZERO else not waterCoords.has(coords)
 	)
 	
 	# If we're the server, sync walkable tiles and terrain data to clients
@@ -142,7 +142,7 @@ func generate_terrain():
 				tile_map.set_cell(pos, tileset_source, grassAtlasCoords.pick_random())
 				tiles_set += 1
 			"water":
-				tile_map.set_cell(pos, tileset_source, waterCoors.pick_random())
+				tile_map.set_cell(pos, tileset_source, waterCoords.pick_random())
 				tiles_set += 1
 			"sand":
 				tile_map.set_cell(pos, tileset_source, sandCoords.pick_random())
