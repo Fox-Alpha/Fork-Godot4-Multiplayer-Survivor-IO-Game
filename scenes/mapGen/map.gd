@@ -10,11 +10,11 @@ var tileset_source = 1  # This matches the source ID in the tileset
 
 ## Koordinaten einzelner Tiles im Atlas
 #region AtlasCoordinates
-var grassAtlasCoords = [Vector2i(0,0), Vector2i(1,0), Vector2i(2,0), Vector2i(3,0)]
-var waterCoors = [Vector2i(18,0), Vector2i(19,0)]
-var sandCoords = [Vector2i(4,0), Vector2i(5,0)]
-var cementCoords = [Vector2i(8,0), Vector2i(9,0), Vector2i(10,0), Vector2i(11,0)]
+var grassAtlasCoords = [Vector2i(0,0), Vector2i(1,0), Vector2i(2,0), Vector2i(3,0), Vector2i(16,0), Vector2i(17,0)]
+var sandCoords = [Vector2i(4,0), Vector2i(5,0), Vector2i(14,0), Vector2i(15,0)]
+var cementCoords = [Vector2i(6,0), Vector2i(7,0), Vector2i(8,0), Vector2i(9,0)]
 var wallCoords = [Vector2i(8,12)]
+var waterCoors = [Vector2i(18,0), Vector2i(19,0)]
 #endregion
 
 ## Liste der Begehbaren Tiles auf der Karte
