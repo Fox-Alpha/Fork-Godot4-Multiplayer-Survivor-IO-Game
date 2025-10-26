@@ -15,6 +15,21 @@ var sandCoords = [Vector2i(4,0), Vector2i(5,0), Vector2i(14,0), Vector2i(15,0)]
 var cementCoords = [Vector2i(6,0), Vector2i(7,0), Vector2i(8,0), Vector2i(9,0)]
 var wallCoords = [Vector2i(8,12)]
 var waterCoords = [Vector2i(18,0), Vector2i(19,0)]
+
+var AtlasTileCoordnates : Array[Vector2i]= [
+	Vector2i(0,0), Vector2i(1,0), Vector2i(2,0), Vector2i(3,0), Vector2i(16,0), Vector2i(17,0),
+	Vector2i(4,0), Vector2i(5,0), Vector2i(14,0), Vector2i(15,0),
+	Vector2i(6,0), Vector2i(7,0), Vector2i(8,0), Vector2i(9,0),
+	Vector2i(8,12),
+	Vector2i(18,0), Vector2i(19,0)
+]
+enum AtlasTileType {
+	GRASTILE_1, GRASTILE_2, GRASTILE_3, GRASTILE_4, GRASTILE_5, GRASTILE_6, 
+	SANDTILE_1, SANDTILE_2, SANDTILE_3, SANDTILE_4, 
+	CEMENTTILE_1, CEMENTTILE_2, CEMENTTILE_3, CEMENTTILE_4, 
+	WALLTILE_1,
+	WATERTILE_1, WATERTILE_2 
+}
 #endregion
 
 ## Liste der Begehbaren Tiles auf der Karte
