@@ -8,19 +8,24 @@ var tileset_source = 1  # This matches the source ID in the tileset
 
 @onready var tile_map: TileMapLayer = $TileMap  # The TileMap node
 
+## Koordinaten einzelner Tiles im Atlas
+#region AtlasCoordinates
 var grassAtlasCoords = [Vector2i(0,0), Vector2i(1,0), Vector2i(2,0), Vector2i(3,0)]
 var waterCoors = [Vector2i(18,0), Vector2i(19,0)]
 var sandCoords = [Vector2i(4,0), Vector2i(5,0)]
 var cementCoords = [Vector2i(8,0), Vector2i(9,0), Vector2i(10,0), Vector2i(11,0)]
 var wallCoords = [Vector2i(8,12)]
+#endregion
 
+## Liste der Begehbaren Tiles auf der Karte
 var walkable_tiles: Array = []
+## Liste der gesamten Tiles
 var terrain_data: Dictionary = {}
 
 var noise = FastNoiseLite.new()
 
 # Noise parameters
-var tile_size = 64
+#var tile_size = 64
 
 #endregion
 
