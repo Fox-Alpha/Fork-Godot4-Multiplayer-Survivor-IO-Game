@@ -1,8 +1,9 @@
-[gd_scene load_steps=11 format=3 uid="uid://c3rwa8o141mf4"]
+[gd_scene load_steps=12 format=3 uid="uid://c3rwa8o141mf4"]
 
 [ext_resource type="Script" uid="uid://8rglyfwnkscr" path="res://scenes/main/main.gd" id="1_5kenc"]
 [ext_resource type="PackedScene" uid="uid://bf074ibcy5o0" path="res://scenes/mapGen/map.tscn" id="1_vj1jr"]
 [ext_resource type="PackedScene" uid="uid://ehwdtyx5ivl" path="res://scenes/ui/spawn/spawnPlayer.tscn" id="2_ajc02"]
+[ext_resource type="PackedScene" uid="uid://bihb43bpsnreg" path="res://scenes/mapGen/world_boundarys.tscn" id="3_a8run"]
 [ext_resource type="PackedScene" uid="uid://bmv1uy5a1k05u" path="res://scenes/ui/inventory/inventory.tscn" id="6_tq15c"]
 [ext_resource type="PackedScene" uid="uid://cogav6f5iu6qb" path="res://scenes/ui/minimap/minimap.tscn" id="6_xel07"]
 [ext_resource type="Script" uid="uid://dx5sgefsout8p" path="res://scenes/main/dayNightCycle.gd" id="7_4y3sb"]
@@ -19,6 +20,8 @@ properties/0/replication_mode = 2
 script = ExtResource("1_5kenc")
 
 [node name="Map" parent="." instance=ExtResource("1_vj1jr")]
+
+[node name="WorldBoundarys" parent="." instance=ExtResource("3_a8run")]
 
 [node name="Pickups" type="Node2D" parent="."]
 
@@ -50,7 +53,7 @@ _spawnable_scenes = PackedStringArray("uid://5w8x65uy5ud7")
 spawn_path = NodePath("../Players")
 
 [node name="EnemySpawner" type="MultiplayerSpawner" parent="."]
-_spawnable_scenes = PackedStringArray("uid://jk7h882ggec6")
+_spawnable_scenes = PackedStringArray("uid://d3bgdspo4bhr4")
 spawn_path = NodePath("../Enemies")
 
 [node name="ProjectileSpawner" type="MultiplayerSpawner" parent="."]
