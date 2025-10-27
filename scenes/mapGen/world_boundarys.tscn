@@ -1,0 +1,58 @@
+[gd_scene load_steps=6 format=3 uid="uid://bihb43bpsnreg"]
+
+[ext_resource type="Script" uid="uid://bwqng4qbmax4j" path="res://scenes/mapGen/world_boundarys.gd" id="1_dmdjc"]
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_yp6xr"]
+distance = 5.0
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_dmdjc"]
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_8q5vf"]
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_d5ebf"]
+
+[node name="WorldBoundarys" type="Node2D" node_paths=PackedStringArray("LeftBorder", "TopBorder", "RightBorder", "BottomBorder")]
+y_sort_enabled = true
+script = ExtResource("1_dmdjc")
+LeftBorder = NodePath("LeftBorder")
+TopBorder = NodePath("TopBorder")
+RightBorder = NodePath("RightBorder")
+BottomBorder = NodePath("BottomBorder")
+
+[node name="LeftBorder" type="StaticBody2D" parent="."]
+z_index = 25
+position = Vector2(-128, 0)
+rotation = 1.5708
+collision_layer = 128
+collision_mask = 0
+
+[node name="Collision" type="CollisionShape2D" parent="LeftBorder"]
+shape = SubResource("WorldBoundaryShape2D_yp6xr")
+
+[node name="TopBorder" type="StaticBody2D" parent="."]
+position = Vector2(0, -128)
+rotation = 3.14159
+collision_layer = 128
+collision_mask = 0
+
+[node name="Collision" type="CollisionShape2D" parent="TopBorder"]
+shape = SubResource("WorldBoundaryShape2D_dmdjc")
+
+[node name="RightBorder" type="StaticBody2D" parent="."]
+z_index = 25
+position = Vector2(128, 0)
+rotation = -1.5708
+collision_layer = 128
+collision_mask = 0
+
+[node name="Collision" type="CollisionShape2D" parent="RightBorder"]
+shape = SubResource("WorldBoundaryShape2D_8q5vf")
+
+[node name="BottomBorder" type="StaticBody2D" parent="."]
+z_index = 25
+position = Vector2(0, 128)
+collision_layer = 128
+collision_mask = 0
+
+[node name="Collision" type="CollisionShape2D" parent="BottomBorder"]
+shape = SubResource("WorldBoundaryShape2D_d5ebf")

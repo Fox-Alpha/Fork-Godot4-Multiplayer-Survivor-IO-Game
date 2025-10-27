@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://bf074ibcy5o0"]
+[gd_scene load_steps=4 format=3 uid="uid://bf074ibcy5o0"]
 
 [ext_resource type="Script" uid="uid://cdmbfuih6pya1" path="res://scenes/mapGen/map.gd" id="1_gggpt"]
 [ext_resource type="TileSet" uid="uid://cny45owea8lcj" path="res://assets/tileset/tileset.tres" id="2_c3hbg"]
+[ext_resource type="PackedScene" uid="uid://bihb43bpsnreg" path="res://scenes/mapGen/world_boundarys.tscn" id="3_qpycp"]
 
 [node name="Map" type="Node2D"]
 script = ExtResource("1_gggpt")
@@ -9,3 +10,6 @@ script = ExtResource("1_gggpt")
 [node name="TileMap" type="TileMapLayer" parent="."]
 use_parent_material = true
 tile_set = ExtResource("2_c3hbg")
+
+[node name="WorldBoundarys" parent="." instance=ExtResource("3_qpycp")]
+script = null
