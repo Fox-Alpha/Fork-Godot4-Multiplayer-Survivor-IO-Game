@@ -125,6 +125,8 @@ func generateMap():
 		sync_walkable_tiles.rpc(walkable_tiles)
 		sync_terrain_data.rpc(terrain_data)
 
+	Multihelper.terrain_generated.emit(tile_map.get_used_rect().end)
+
 
 func generate_terrain():
 	print("Starting terrain generation with seed: ", noise.seed)

@@ -16,6 +16,7 @@ signal player_registered
 @warning_ignore("unused_signal")
 signal player_score_updated
 signal data_loaded
+signal terrain_generated
 
 const PORT = Constants.PORT
 const DEFAULT_SERVER_IP = Constants.SERVER_IP
