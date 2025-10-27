@@ -250,6 +250,23 @@ func send_full_map_to_client(peer_id: int):
 		var mod_1024 := dummyarray.size() % 1024
 		print("Server [DEBUG]: Step map Size mod%1024: ", mod_1024)
 		
+		start_send_map_to_client.rpc_id(peer_id, dummyarray.size(), Vector2i(map_width, map_height))
+		
+		var step := 1024
+		var part := 1
+		for i in range(0, dummyarray.size(), step):
+			if i + step > dummyarray.size():
+				step = dummyarray.size() -i
+			var slicedarray = dummyarray.slice(i, i+step)
+			step_send_map_to_client.rpc_id(peer_id, part, slicedarray)
+			part += 1
+			print("Server [DEBUG]: (%s) Slicing from %s-%s / %s" % [str(dummyarray.size()), str(i), str(i+step), str(step)])
+			print("Server [DEBUG]:  %s / %s" % [str(i), str(step)])
+		
+		end_send_map_to_client.rpc_id(peer_id, dummyarray.size(), Vector2i(
+				map_width * tile_map.tile_set.tile_size.x, 
+				map_height * tile_map.tile_set.tile_size.y))
+		
 		#var slicedarray := dummyarray.slice(dummyarray.size(), -1024)
 		
 		### DEBUGGING ###
