@@ -240,16 +240,22 @@ func send_full_map_to_client(peer_id: int):
 	
 	if map_tiles_pba.size() > 0:
 		print("First tile data: pos=", map_tiles_pba[0][0], " atlas=", map_tiles_pba[0][1], " type=", str(map_tiles_pba[0][2]))
-		#print("Data to send MapData Size: " + str(map_tiles.size()))
 		print("Data to send MapData Size (pba): " + str(map_tiles_pba.size()))
-		#multiplayer.multiplayer_peer.set_target_peer(peer_id)
-		#multiplayer.multiplayer_peer.var(map_tiles_pba)
-		var _ibb = multiplayer.multiplayer_peer.get_inbound_buffer_size()
-		var _obb = multiplayer.multiplayer_peer.get_outbound_buffer_size()
-		#var mod_1024 := map_tiles_pba.size() % 1000
 		
-		for i in range(0,map_tiles_pba.size(),1024):
-			print("Step map Size ", i, "/", i+1024-1)
+		### DEBUGGING ###
+		
+		var dummyarray : Array[int] = []
+		dummyarray.resize(4096)
+		dummyarray.fill(0)
+		var mod_1024 := dummyarray.size() % 1024
+		print("Server [DEBUG]: Step map Size mod%1024: ", mod_1024)
+		
+		#var slicedarray := dummyarray.slice(dummyarray.size(), -1024)
+		
+		### DEBUGGING ###
+		
+		for i in range(0, map_tiles_pba.size(), 1024):
+			print("Server: Step map Size ", i, "/", i+1024-1)
 			#sync_full_map.rpc_id(peer_id, map_tiles_pba.slice(i,i+1024-1))
 		
 		#sync_full_map.rpc_id(peer_id, map_tiles_pba.slice(0, 1023))
