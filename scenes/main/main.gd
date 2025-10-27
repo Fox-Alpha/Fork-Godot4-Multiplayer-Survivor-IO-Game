@@ -99,7 +99,7 @@ func spawnObjects(amount):
 				var check_pos = Vector2i(tile.x + dx, tile.y + dy)
 				if check_pos.x >= 0 and check_pos.x < $Map.map_width and check_pos.y >= 0 and check_pos.y < $Map.map_height:
 					var cell = $Map.tile_map.get_cell_atlas_coords(check_pos)
-					if $Map.waterCoors.has(cell):
+					if $Map.waterCoords.has(cell):
 						is_valid = false
 						break
 			if not is_valid:
