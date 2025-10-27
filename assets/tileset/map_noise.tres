@@ -1,0 +1,16 @@
+[gd_resource type="NoiseTexture2D" load_steps=3 format=3 uid="uid://j7vj8b1s5vpl"]
+
+[sub_resource type="Gradient" id="Gradient_myr4o"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_m3h6k"]
+noise_type = 3
+seed = 21277
+fractal_type = 0
+
+[resource]
+width = 64
+height = 64
+generate_mipmaps = false
+noise = SubResource("FastNoiseLite_m3h6k")
+color_ramp = SubResource("Gradient_myr4o")
+seamless = true
