@@ -253,7 +253,7 @@ func spawnPlayer(playerName, id, characterFile):
 							var check_pos = Vector2i(x + dx, y + dy)
 							if check_pos.x >= 0 and check_pos.x < map.map_width and check_pos.y >= 0 and check_pos.y < map.map_height:
 								var check_coords = map.tile_map.get_cell_atlas_coords(check_pos)  # layer 0, position, alternative=false
-								if map.waterCoors.has(check_coords):
+								if map.waterCoords.has(check_coords):
 									is_safe = false
 									break
 						if not is_safe: break
