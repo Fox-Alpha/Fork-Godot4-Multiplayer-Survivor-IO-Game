@@ -124,8 +124,8 @@ func generateMap():
 	if multiplayer.is_server():
 		sync_walkable_tiles.rpc(walkable_tiles)
 		sync_terrain_data.rpc(terrain_data)
+		Multihelper.terrain_generated.emit(tile_map.get_used_rect().end * tile_map.tile_set.tile_size)
 
-	Multihelper.terrain_generated.emit(tile_map.get_used_rect().end)
 
 
 func generate_terrain():
@@ -316,6 +316,8 @@ func sync_full_map(map_tiles: Array):
 		print("Warning: No tiles were placed! Requesting map data again...")
 		await get_tree().create_timer(1.0).timeout
 		request_map_data.rpc_id(1)
+	
+	Multihelper.terrain_generated.emit(tile_map.get_used_rect().end * tile_map.tile_set.tile_size)
 	pass
 
 
