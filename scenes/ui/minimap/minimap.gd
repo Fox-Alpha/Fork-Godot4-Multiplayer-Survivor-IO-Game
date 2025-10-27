@@ -19,8 +19,8 @@ func _ready():
 		push_error("TileMap node not found! Check the path: /root/Game/Level/Main/Map/TileMap")
 		return
 	custom_minimum_size = minimap_size
-	mobs_container = get_node(mobs_container_path) if mobs_container_path else null
-	players_container = get_node(players_container_path) if players_container_path else null
+	mobs_container = get_node_or_null(mobs_container_path) #if mobs_container_path else null
+	players_container = get_node_or_null(players_container_path) #if players_container_path else null
 
 func _draw():
 	if !tile_map or !tile_map.tile_set:
