@@ -245,7 +245,7 @@ func send_full_map_to_client(peer_id: int):
 		### DEBUGGING ###
 		
 		var dummyarray : Array[int] = []
-		dummyarray.resize(4096)
+		dummyarray.resize(4000)
 		dummyarray.fill(0)
 		var mod_1024 := dummyarray.size() % 1024
 		print("Server [DEBUG]: Step map Size mod%1024: ", mod_1024)
@@ -287,14 +287,17 @@ func send_full_map_to_client(peer_id: int):
 
 @rpc("authority", "call_remote", "reliable")
 func start_send_map_to_client(tilecount : int, map_size : Vector2i) -> void:
+	print("Client [DEBUG] start_send_map_to_client(): count= ", tilecount, " mapsize: ", map_size)
 	pass
 	
 @rpc("authority", "call_remote", "reliable")
-func end_send_map_to_clint(tilecount : int, map_size : Vector2i) -> void:
+func end_send_map_to_client(tilecount : int, pxl_map_size : Vector2i) -> void:
+	print("Client [DEBUG] end_send_map_to_client(): count= ", tilecount, " mapsize: ", pxl_map_size)
 	pass
 
 @rpc("authority", "call_remote", "reliable")
 func step_send_map_to_client(step: int, Tiles: Array) -> void:
+	print("Client [DEBUG] step_send_map_to_client(): step= ", step, " tilearraysize: ", Tiles.size())
 	pass
 
 @rpc("any_peer", "call_remote", "reliable")
