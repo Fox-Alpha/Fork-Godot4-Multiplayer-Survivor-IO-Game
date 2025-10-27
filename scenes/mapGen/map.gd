@@ -262,6 +262,17 @@ func send_full_map_to_client(peer_id: int):
 	else:
 		push_error("Still no tiles after regeneration attempt!")
 
+@rpc("authority", "call_remote", "reliable")
+func start_send_map_to_client(tilecount : int, map_size : Vector2i) -> void:
+	pass
+	
+@rpc("authority", "call_remote", "reliable")
+func end_send_map_to_clint(tilecount : int, map_size : Vector2i) -> void:
+	pass
+
+@rpc("authority", "call_remote", "reliable")
+func step_send_map_to_client(step: int, Tiles: Array) -> void:
+	pass
 
 @rpc("any_peer", "call_remote", "reliable")
 func request_map_data():
