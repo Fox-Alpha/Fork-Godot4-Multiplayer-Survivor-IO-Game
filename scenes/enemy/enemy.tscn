@@ -1,35 +1,10 @@
-[gd_scene load_steps=10 format=3 uid="uid://d3bgdspo4bhr4"]
+[gd_scene load_steps=11 format=3 uid="uid://d3bgdspo4bhr4"]
 
-[ext_resource type="Script" path="res://scenes/enemy/enemy.gd" id="1_afvkb"]
-[ext_resource type="Texture2D" uid="uid://ceue4vmbas2ws" path="res://assets/characters/enemy/zombie.png" id="2_dxtpn"]
-[ext_resource type="AudioStream" uid="uid://bettvca8oc6y3" path="res://assets/sfx/step.ogg" id="3_bflkw"]
+[ext_resource type="Script" uid="uid://hsm0xlqtjp44" path="res://scenes/enemy/enemy.gd" id="1_afvkb"]
+[ext_resource type="Texture2D" uid="uid://cmgqoo4d6mewa" path="res://assets/characters/enemy/zombie.png" id="2_dxtpn"]
+[ext_resource type="AudioStream" uid="uid://djbrqfu2oaj7o" path="res://assets/sfx/step.ogg" id="3_bflkw"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_m76gk"]
-
-[sub_resource type="Animation" id="Animation_walking"]
-resource_name = "walking"
-length = 0.4
-loop_mode = 1
-tracks/0/type = "audio"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("FootstepsAudioPlayer")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"clips": [{
-"end_offset": 0.0,
-"start_offset": 0.0,
-"stream": ExtResource("3_bflkw")
-}],
-"times": PackedFloat32Array(0.2)
-}
-tracks/0/use_blend = true
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_enemy"]
-_data = {
-"walking": SubResource("Animation_walking")
-}
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_tx4kn"]
 properties/0/path = NodePath(".:position")
@@ -72,9 +47,32 @@ corner_radius_top_right = 5
 corner_radius_bottom_right = 5
 corner_radius_bottom_left = 5
 
+[sub_resource type="Animation" id="Animation_walking"]
+resource_name = "walking"
+length = 0.4
+loop_mode = 1
+tracks/0/type = "audio"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("FootstepsAudioPlayer")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"clips": [{
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource("3_bflkw")
+}],
+"times": PackedFloat32Array(0.2)
+}
+tracks/0/use_blend = true
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_enemy"]
+_data = {
+&"walking": SubResource("Animation_walking")
+}
+
 [node name="Enemy" type="CharacterBody2D" groups=["damageable", "enemy"]]
-collision_layer = 1
-collision_mask = 1
 script = ExtResource("1_afvkb")
 
 [node name="MovingParts" type="Node2D" parent="."]
@@ -89,7 +87,6 @@ shape = SubResource("CircleShape2D_m76gk")
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
-root_path = NodePath("..")
 replication_config = SubResource("SceneReplicationConfig_tx4kn")
 visibility_update_mode = 1
 
@@ -133,13 +130,12 @@ show_percentage = false
 
 [node name="FootstepsAudioPlayer" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("3_bflkw")
-pitch_scale = 3.0
 volume_db = -26.0
-bus = "FootstepSounds"
+pitch_scale = 3.0
 max_distance = 1250.0
 attenuation = 2.0
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
-"": SubResource("AnimationLibrary_enemy")
+&"": SubResource("AnimationLibrary_enemy")
 }
