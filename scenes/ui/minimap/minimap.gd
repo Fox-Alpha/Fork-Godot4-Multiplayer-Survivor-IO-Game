@@ -10,8 +10,8 @@ extends Control
 var mobs_container
 var players_container
 
-const PLAYER_COLOR = Color(1, 0, 0)  # Red
-const MOB_COLOR = Color(1, 0.5, 0)   # Orange
+const PLAYER_COLOR = Color(0.159, 0.369, 0.623, 1.0)  # Red
+const MOB_COLOR = Color(0.685, 0.132, 0.229, 1.0)   # Orange
 const BACKGROUND_COLOR = Color(0.1, 0.1, 0.1, 0.5)  # Dark gray with some transparency
 
 func _ready():
