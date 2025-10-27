@@ -231,7 +231,7 @@ func die():
 	if !multiplayer.is_server():
 		return
 	var peerId := int(str(name))
-	Multihelper._deregister_character.rpc(peerId)
+	#Multihelper._deregister_character.rpc(peerId)
 	dropInventory()
 	queue_free()
 	if peerId in multiplayer.get_peers():
