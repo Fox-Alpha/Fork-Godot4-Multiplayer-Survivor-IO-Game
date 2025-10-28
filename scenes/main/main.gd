@@ -37,9 +37,12 @@ func ViewPortSizeChanged() -> void:
 	if not self.multiplayer.is_server():
 		return
 	var camera = get_viewport().get_camera_2d()
-	camera.global_position = world_map.get_used_rect().get_center() * 64
+	var maprect = world_map.get_used_rect()
+	maprect.end.x *= world_map.tile_set.tile_size.x
+	maprect.end.y *= world_map.tile_set.tile_size.y
+	camera.global_position = maprect.get_center()
 	var cam_vps : Vector2 = camera.get_viewport().size
-	var map_size_in_px : Vector2 = Vector2i(64*64+100, 64*64+100)
+	var map_size_in_px : Vector2 = Vector2i(maprect.end.x +150, maprect.end.y +150)
 	camera.zoom.x = cam_vps.x / map_size_in_px.x
 	camera.zoom.y = cam_vps.y / map_size_in_px.y
 	
