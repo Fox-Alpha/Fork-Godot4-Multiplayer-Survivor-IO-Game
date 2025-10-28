@@ -280,3 +280,10 @@ func itemRemoved(id, item):
 
 func projectileHit(body):
 	body.getDamage(self, attackDamage, damageType)
+
+func ResetCamLimits(mapsize : Vector2i, _LayerIdx : int) -> void :
+	var camera : Camera2D = get_viewport().get_camera_2d()
+	camera.limit_top = 0 #-mapsize.y / 2	#-2000
+	camera.limit_left = 0 #-mapsize.x / 2	#-4400
+	camera.limit_bottom = mapsize.y #mapsize.y / 2	#2000
+	camera.limit_right = mapsize.x #mapsize.x / 2	#4400
