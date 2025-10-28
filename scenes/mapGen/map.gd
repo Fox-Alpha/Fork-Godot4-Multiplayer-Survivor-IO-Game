@@ -48,6 +48,7 @@ const AtlasTileTypeDict : Dictionary = {
 var walkable_tiles: Array = []
 ## Liste der gesamten Tiles
 var terrain_data: Dictionary = {}
+var recvd_map_tiles: Array = []
 
 var noise = FastNoiseLite.new()
 
@@ -244,26 +245,28 @@ func send_full_map_to_client(peer_id: int):
 		
 		### DEBUGGING ###
 		
-		var dummyarray : Array[int] = []
-		dummyarray.resize(4000)
-		dummyarray.fill(0)
-		var mod_1024 := dummyarray.size() % 1024
-		print("Server [DEBUG]: Step map Size mod%1024: ", mod_1024)
+		var dummyarray : Array = []
+		#dummyarray.resize(4000)
+		#dummyarray.fill(0)
+		#var mod_1024 := dummyarray.size() % 1024
+		#print("Server [DEBUG]: Step map Size mod%1024: ", mod_1024)
 		
-		start_send_map_to_client.rpc_id(peer_id, dummyarray.size(), Vector2i(map_width, map_height))
+		#dummyarray = map_tiles_pba.duplicate(true)
+		
+		start_send_map_to_client.rpc_id(peer_id, map_tiles_pba.size(), Vector2i(map_width, map_height))
 		
 		var step := 1024
 		var part := 1
-		for i in range(0, dummyarray.size(), step):
-			if i + step > dummyarray.size():
-				step = dummyarray.size() -i
-			var slicedarray = dummyarray.slice(i, i+step)
+		for i in range(0, map_tiles_pba.size(), step):
+			if i + step > map_tiles_pba.size():
+				step = map_tiles_pba.size() -i
+			var slicedarray = map_tiles_pba.slice(i, i+step)
 			step_send_map_to_client.rpc_id(peer_id, part, slicedarray)
 			part += 1
-			print("Server [DEBUG]: (%s) Slicing from %s-%s / %s" % [str(dummyarray.size()), str(i), str(i+step), str(step)])
+			print("Server [DEBUG]: (%s) Slicing from %s-%s / %s" % [str(map_tiles_pba.size()), str(i), str(i+step), str(step)])
 			print("Server [DEBUG]:  %s / %s" % [str(i), str(step)])
 		
-		end_send_map_to_client.rpc_id(peer_id, dummyarray.size(), Vector2i(
+		end_send_map_to_client.rpc_id(peer_id, map_tiles_pba.size(), Vector2i(
 				map_width * tile_map.tile_set.tile_size.x, 
 				map_height * tile_map.tile_set.tile_size.y))
 		
@@ -276,8 +279,8 @@ func send_full_map_to_client(peer_id: int):
 			#sync_full_map.rpc_id(peer_id, map_tiles_pba.slice(i,i+1024-1))
 		
 		#sync_full_map.rpc_id(peer_id, map_tiles_pba.slice(0, 1023))
-		sync_full_map.rpc_id(peer_id, map_tiles_pba.slice(1024, 2047))
-		sync_full_map.rpc_id(peer_id, map_tiles_pba.slice(2048, 3071))
+		#sync_full_map.rpc_id(peer_id, map_tiles_pba.slice(1024, 2047))
+		#sync_full_map.rpc_id(peer_id, map_tiles_pba.slice(2048, 3071))
 		#sync_full_map.rpc_id(peer_id, map_tiles_pba.slice(3072, 4096))
 		
 		
@@ -285,19 +288,28 @@ func send_full_map_to_client(peer_id: int):
 	else:
 		push_error("Still no tiles after regeneration attempt!")
 
+
+## ToClient: Server sends information about tilecount and map size
 @rpc("authority", "call_remote", "reliable")
 func start_send_map_to_client(tilecount : int, map_size : Vector2i) -> void:
 	print("Client [DEBUG] start_send_map_to_client(): count= ", tilecount, " mapsize: ", map_size)
+	recvd_map_tiles.clear()
 	pass
-	
+
+
+## ToClient: Server sends information about expected tilecount and map size in pixel
 @rpc("authority", "call_remote", "reliable")
 func end_send_map_to_client(tilecount : int, pxl_map_size : Vector2i) -> void:
 	print("Client [DEBUG] end_send_map_to_client(): count= ", tilecount, " mapsize: ", pxl_map_size)
+	sync_full_map(recvd_map_tiles)
 	pass
 
+
+## ToClient: Server sends active step and tilearray
 @rpc("authority", "call_remote", "reliable")
 func step_send_map_to_client(step: int, Tiles: Array) -> void:
 	print("Client [DEBUG] step_send_map_to_client(): step= ", step, " tilearraysize: ", Tiles.size())
+	recvd_map_tiles.append_array(Tiles)
 	pass
 
 @rpc("any_peer", "call_remote", "reliable")
@@ -313,7 +325,7 @@ func request_map_data():
 		print("Warning: Non-server received map data request")
 
 
-@rpc("authority", "call_remote", "reliable")
+#@rpc("authority", "call_remote", "reliable")
 #func sync_full_map(map_tiles: Array):
 func sync_full_map(map_tiles: Array):
 		
