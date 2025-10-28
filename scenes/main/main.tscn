@@ -20,6 +20,8 @@ properties/0/replication_mode = 2
 script = ExtResource("1_5kenc")
 
 [node name="Map" parent="." instance=ExtResource("1_vj1jr")]
+map_width = 75
+map_height = 75
 
 [node name="WorldBoundarys" parent="." instance=ExtResource("3_a8run")]
 
@@ -44,9 +46,7 @@ unique_name_in_owner = true
 mouse_filter = 2
 
 [node name="Minimap" parent="HUD" instance=ExtResource("6_xel07")]
-offset_top = -230.0
-offset_right = 200.0
-offset_bottom = -30.0
+offset_top = -227.0
 
 [node name="PlayerSpawner" type="MultiplayerSpawner" parent="."]
 _spawnable_scenes = PackedStringArray("uid://5w8x65uy5ud7")
