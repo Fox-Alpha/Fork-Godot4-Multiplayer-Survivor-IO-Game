@@ -1,8 +1,9 @@
 # godot 4.3
 extends Node2D
 #region HEAD
-var map_width = 64
-var map_height = 64
+@export_category("Map Size Settings")
+@export var map_width = 64
+@export var map_height = 64
 
 var tileset_source = 1  # This matches the source ID in the tileset
 
@@ -245,7 +246,7 @@ func send_full_map_to_client(peer_id: int):
 		
 		### DEBUGGING ###
 		
-		var dummyarray : Array = []
+		#var dummyarray : Array = []
 		#dummyarray.resize(4000)
 		#dummyarray.fill(0)
 		#var mod_1024 := dummyarray.size() % 1024
