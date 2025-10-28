@@ -7,7 +7,7 @@ func start_game():
 	get_tree().paused = false
 	# Only change level on the server.
 	# Clients will instantiate the level via the spawner.
-	if multiplayer.is_server():
+	if multiplayer.is_server() and not OS.has_environment("dedicated_server"):
 		change_level.call_deferred(load("res://scenes/main/main.tscn"))
 		
 # Call this function deferred and only on the main authority (server).
