@@ -281,6 +281,7 @@ _data = [Vector2(0.00279329, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
 point_count = 2
 
 [node name="Player" type="CharacterBody2D" groups=["damageable", "player"]]
+collision_mask = 129
 script = ExtResource("1_script")
 
 [node name="MovingParts" type="Node2D" parent="."]
@@ -320,10 +321,8 @@ shape = SubResource("CircleShape2D_cdkds")
 enabled = false
 
 [node name="PlayerUi" parent="." instance=ExtResource("3_ui")]
-offset_left = -50.0
-offset_top = -50.0
-offset_right = -50.0
-offset_bottom = -50.0
+offset_top = -65.0
+offset_bottom = -65.0
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
@@ -377,8 +376,8 @@ anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
 offset_left = -70.0
-offset_top = -100.0
+offset_top = -120.0
 offset_right = 70.0
-offset_bottom = -50.0
+offset_bottom = -70.0
 grow_horizontal = 2
 grow_vertical = 0
