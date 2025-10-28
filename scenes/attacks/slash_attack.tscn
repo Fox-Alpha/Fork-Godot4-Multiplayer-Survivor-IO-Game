@@ -1,10 +1,10 @@
 [gd_scene load_steps=9 format=3 uid="uid://ckcl60ixuavyq"]
 
-[ext_resource type="Texture2D" uid="uid://bwgam7jisxhlo" path="res://assets/characters/attacks/slash/NPT100.png" id="1_btrb2"]
+[ext_resource type="Texture2D" uid="uid://ddmxlgojgrjkt" path="res://assets/characters/attacks/slash/NPT100.png" id="1_btrb2"]
 [ext_resource type="Script" path="res://scenes/attacks/slash_attack.gd" id="1_olb8v"]
-[ext_resource type="Texture2D" uid="uid://cvi0nf7ojg7t" path="res://assets/characters/attacks/slash/NPT101.png" id="2_ooaa3"]
-[ext_resource type="Texture2D" uid="uid://cdreicodqqmh4" path="res://assets/characters/attacks/slash/NPT102.png" id="3_v0icu"]
-[ext_resource type="Texture2D" uid="uid://b2s7l3weui1aq" path="res://assets/characters/attacks/slash/NPT103.png" id="4_stcj2"]
+[ext_resource type="Texture2D" uid="uid://bephdl6h7mh8n" path="res://assets/characters/attacks/slash/NPT101.png" id="2_ooaa3"]
+[ext_resource type="Texture2D" uid="uid://cspdn36tj688s" path="res://assets/characters/attacks/slash/NPT102.png" id="3_v0icu"]
+[ext_resource type="Texture2D" uid="uid://bgdvv7dwq4mhq" path="res://assets/characters/attacks/slash/NPT103.png" id="4_stcj2"]
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_pit57"]
 properties/0/path = NodePath(".:position")
