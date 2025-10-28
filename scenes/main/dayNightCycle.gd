@@ -35,8 +35,9 @@ func _process(delta: float) -> void:
 		time += delta * INGAME_TO_REAL_MINUTE_DURATION * INGAME_SPEED
 
 func _update_color() -> void:
-	var value = (sin(time - PI / 2.0) + 1.0) / 2.0
-	self.color = gradient_texture.gradient.sample(value)
+	if not multiplayer.is_server():
+		var value = (sin(time - PI / 2.0) + 1.0) / 2.0
+		self.color = gradient_texture.gradient.sample(value)
 
 @rpc("any_peer", "call_local", "reliable")
 func sync_time(day: int, hour: int, minute: int) -> void:
