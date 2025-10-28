@@ -19,4 +19,6 @@ func _on_hostDebugButton_pressed():
 	Multihelper.create_game()
 
 func _on_connect_timer_timeout():
-	Multihelper.join_game()
+	if not multiplayer.multiplayer_peer.CONNECTION_DISCONNECTED:
+		Multihelper.join_game()
+	pass
