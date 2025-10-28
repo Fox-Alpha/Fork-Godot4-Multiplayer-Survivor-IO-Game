@@ -331,8 +331,8 @@ func request_map_data():
 func sync_full_map(map_tiles: Array):
 		
 	#print("Client received map data with ", map_tiles_pba.size(), "(PackedByteArray) tiles")
-	var _ibb = multiplayer.multiplayer_peer.get_inbound_buffer_size()
-	var _obb = multiplayer.multiplayer_peer.get_outbound_buffer_size()
+	#var _ibb = multiplayer.multiplayer_peer.get_inbound_buffer_size()
+	#var _obb = multiplayer.multiplayer_peer.get_outbound_buffer_size()
 
 	# TODO:
 	#var map_tiles := map_tiles_pba
