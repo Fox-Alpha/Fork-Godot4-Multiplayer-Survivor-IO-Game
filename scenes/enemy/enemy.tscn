@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://hsm0xlqtjp44" path="res://scenes/enemy/enemy.gd" id="1_afvkb"]
 [ext_resource type="Texture2D" uid="uid://cmgqoo4d6mewa" path="res://assets/characters/enemy/zombie.png" id="2_dxtpn"]
-[ext_resource type="AudioStream" uid="uid://djbrqfu2oaj7o" path="res://assets/sfx/step.ogg" id="3_bflkw"]
+[ext_resource type="AudioStream" uid="uid://cqi2ycda0odwm" path="res://assets/sfx/step.ogg" id="3_bflkw"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_m76gk"]
 

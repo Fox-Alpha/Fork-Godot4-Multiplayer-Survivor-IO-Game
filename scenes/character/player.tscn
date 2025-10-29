@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://b62ptkdpvfstc" path="res://scenes/character/player.gd" id="1_script"]
 [ext_resource type="Texture2D" uid="uid://km3sx58r5vwy" path="res://assets/characters/bodies/4.png" id="2_body"]
-[ext_resource type="AudioStream" uid="uid://djbrqfu2oaj7o" path="res://assets/sfx/step.ogg" id="3_step"]
+[ext_resource type="AudioStream" uid="uid://cqi2ycda0odwm" path="res://assets/sfx/step.ogg" id="3_step"]
 [ext_resource type="PackedScene" path="res://scenes/ui/player/player_ui.tscn" id="3_ui"]
 [ext_resource type="Texture2D" uid="uid://bx7fpakrdnbf3" path="res://assets/characters/hands/hands-sheet.png" id="4_hands"]
 [ext_resource type="AudioStream" uid="uid://70ym6t6pjpde" path="res://assets/sfx/swing.ogg" id="5_swing"]
