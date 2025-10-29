@@ -114,7 +114,7 @@ func recipeSelected(id):
 		var itemSlot := itemSlotScene.instantiate()
 		itemSlot.itemId = ing
 		itemSlot.setRecipeText(Inventory.checkItemCount(str(multiplayer.get_unique_id()), ing),Items.recipes[id][ing])
-		%ingList.add_child(itemSlot)	
+		%ingList.add_child(itemSlot)
 
 func closeRecipe():
 	selectedRecipe = ""

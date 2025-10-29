@@ -6,16 +6,16 @@ var tilemap: Node
 func _ready():
 	# Try to get TileMap first
 	tilemap = get_node_or_null("../Map/TileMap")
-	
+
 	# If TileMap not found, try TileMapLayer
 	if !tilemap:
 		tilemap = get_node_or_null("../Map/TileMapLayer")
-	
+
 	# Check if we found either node
 	if !tilemap:
 		push_error("Neither TileMap nor TileMapLayer node found! Check paths: ../Map/TileMap or ../Map/TileMapLayer")
 		return
-	
+
 	# Make sure we have the right node type
 	if !tilemap is TileMap and !tilemap is TileMapLayer:
 		push_error("Found node at path but it's not a TileMap or TileMapLayer!")
@@ -52,7 +52,7 @@ func get_walkable_tiles_in_distance(player_tile_pos: Vector2i, min_distance: int
 	var walkable_tiles = []
 	var visited = {}
 	var queue = []
-	
+
 	queue.append([player_tile_pos, 0])  # [tile_position, current_distance]
 	visited[player_tile_pos] = true
 

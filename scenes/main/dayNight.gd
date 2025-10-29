@@ -20,4 +20,4 @@ func sync_time(day: int, hour: int, minute: int):
 	current_day = day
 	current_hour = hour
 	current_minute = minute
-	time_tick.emit(current_day, current_hour, current_minute) 
+	time_tick.emit(current_day, current_hour, current_minute)

@@ -9,12 +9,12 @@ signal player_killed
 	set(value):
 		playerName = value
 		$PlayerUi.setPlayerName(value)
-		
+
 @export var characterFile : String:
 	set(value):
 		characterFile = value
 		$MovingParts/Sprite2D.texture = load("res://assets/characters/bodies/"+value)
-		
+
 var inventory : Control
 
 var equippedItem : String:
@@ -96,13 +96,13 @@ func sendMessage(text):
 func disconnected(id):
 	if str(id) == name:
 		die()
-	
+
 func _process(_delta):
 	if not multiplayer.has_multiplayer_peer():
 		return
 	if str(multiplayer.get_unique_id()) == name:
 		var base_vel = Input.get_vector("walkLeft", "walkRight", "walkUp", "walkDown")
-		
+
 		# Handle running
 		if Input.is_action_pressed("run") and can_run and stamina > Constants.MIN_STAMINA_TO_RUN:
 			is_running = true
@@ -112,19 +112,19 @@ func _process(_delta):
 			is_running = false
 			stamina = min(Constants.MAX_STAMINA, stamina + Constants.STAMINA_REGEN_RATE * _delta)
 			speed = int(base_speed)
-			
+
 		# Prevent running if stamina is too low
 		if stamina <= Constants.MIN_STAMINA_TO_RUN:
 			can_run = false
 		elif stamina >= Constants.MIN_STAMINA_TO_RUN * 2:
 			can_run = true
-			
+
 		var vel = base_vel * speed
 		var mouse_position = get_global_mouse_position()
 		var direction_to_mouse = mouse_position - global_position
 		var angle = direction_to_mouse.angle()
 		var doingAction = Input.is_action_pressed("leftClickAction")
-		
+
 		#Apply local movement
 		moveProcess(vel, angle, doingAction)
 		#Send input to server for replication
@@ -236,7 +236,7 @@ func die():
 	queue_free()
 	if peerId in multiplayer.get_peers():
 		Multihelper.showSpawnUI.rpc_id(peerId)
-		
+
 func dropInventory():
 	var inventoryDict = Inventory.inventories[name]
 	for item in inventoryDict.keys():

@@ -25,17 +25,17 @@ func _ready():
 func _draw():
 	if !tile_map or !tile_map.tile_set:
 		return
-		
+
 	# Draw background
 	draw_rect(Rect2(Vector2.ZERO, minimap_size), BACKGROUND_COLOR)
-	
+
 	# Draw mobs if container exists
 	if mobs_container:
 		for mob in mobs_container.get_children():
 			if mob and is_instance_valid(mob):
 				var mob_pos = mob.global_position * zoom
 				draw_circle(mob_pos, 2, MOB_COLOR)
-	
+
 	# Draw players if container exists
 	if players_container:
 		for player in players_container.get_children():

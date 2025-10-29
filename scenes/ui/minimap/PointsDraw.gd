@@ -19,10 +19,10 @@ func _process(_delta):
 func _draw():
 	if !tile_map or !tile_map.tile_set:
 		return
-		
+
 	if is_instance_valid(player):
 		#PlayerGlobalPosition
-		var pgp = player.global_position 
+		var pgp = player.global_position
 		#TileSetTileSize
 		var tsts = Vector2(tile_map.tile_set.tile_size)
 		var PlayerPosToMinimap = pgp / tsts #* tile_size

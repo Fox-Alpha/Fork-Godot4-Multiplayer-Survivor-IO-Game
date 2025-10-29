@@ -38,7 +38,7 @@ func checkHasItem(id, item) -> bool:
 	if item in inventories[id]:
 		return true
 	return false
-	
+
 func checkItemCount(id, item) -> int:
 	if !checkHasItem(id, item):
 		return 0

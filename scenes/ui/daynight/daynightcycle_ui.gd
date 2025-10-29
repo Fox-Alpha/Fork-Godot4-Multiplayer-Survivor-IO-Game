@@ -10,10 +10,10 @@ extends Control
 func set_daytime(day: int, hour: int, minute: int) -> void:
 	day_label.text = "Day " + str(day + 1)
 	day_label_background.text = day_label.text
-	
+
 	time_label.text = _amfm_hour(hour) + ":" + _minute(minute) + " " + _am_pm(hour)
 	time_label_background.text = time_label.text
-	
+
 	if hour <= 12:
 		arrow.rotation_degrees = _remap_rangef(hour, 0, 12, -90, 90)
 	else:

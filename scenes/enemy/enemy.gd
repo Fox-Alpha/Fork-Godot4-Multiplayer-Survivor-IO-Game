@@ -16,16 +16,16 @@ var targetPlayer : CharacterBody2D
 		if value != "":  # Only load texture if we have a valid ID
 			var enemyData = Items.mobs[value]
 			%Sprite2D.texture = load("res://assets/characters/enemy/"+value+".png")
-			
+
 			# Apply visual variations if they exist
 			if "variations" in enemyData:
 				var vars = enemyData["variations"]
-				
+
 				# Apply scale variation
 				if "scale" in vars:
 					var scale_factor = randf_range(vars["scale"]["min"], vars["scale"]["max"])
 					%Sprite2D.scale = Vector2(scale_factor, scale_factor)
-				
+
 				# Apply color tint and opacity
 				if "tint" in vars:
 					var r = randf_range(vars["tint"]["r"]["min"], vars["tint"]["r"]["max"])
@@ -35,11 +35,11 @@ var targetPlayer : CharacterBody2D
 					if "opacity" in vars:
 						a = randf_range(vars["opacity"]["min"], vars["opacity"]["max"])
 					%Sprite2D.modulate = Color(r, g, b, a)
-				
+
 				# Apply random flip
 				if "flip_chance" in vars and randf() < vars["flip_chance"]:
 					%Sprite2D.flip_h = true
-			
+
 			# Apply stats
 			for stat in enemyData.keys():
 				if stat != "variations":  # Skip variations as it's not a stat
@@ -89,7 +89,7 @@ func _process(_delta):
 				tryAttack()
 		else:
 			die(false)
-	
+
 	# Handle animations based on actual velocity
 	#update_animation_state()
 
@@ -123,11 +123,11 @@ func tryAttack():
 		projectile.get_node("MovingParts").rotation = $MovingParts.rotation
 		projectile.hitPlayer.connect(hitPlayer)
 		projectile.targetPos = targetPlayer.position
-		
+
 func hitPlayer(body):
 	if multiplayer.is_server():
 		body.getDamage(self, attackDamage, "normal")
-	
+
 func getDamage(causer, amount, _type):
 	hp -= amount
 	$bloodParticles.emitting = true
@@ -151,20 +151,20 @@ func dropLoots():
 func circle_target():
 	var to_target = targetPlayer.position - position
 	var distance = to_target.length()
-	
+
 	# Calculate perpendicular direction for circling
 	var circle_direction = Vector2(-to_target.y, to_target.x).normalized() * circling_direction
-	
+
 	# If too close or too far, adjust radius
 	var radial_direction = to_target.normalized()
 	if distance < circle_radius:
 		circle_direction += -radial_direction
 	elif distance > circle_radius:
 		circle_direction += radial_direction
-	
+
 	velocity = circle_direction.normalized() * speed * circle_speed_modifier
 	move_and_slide()
-	
+
 	# Randomly change direction sometimes
 	if randf() < 0.01:  # 1% chance per frame to change direction
 		circling_direction *= -1
