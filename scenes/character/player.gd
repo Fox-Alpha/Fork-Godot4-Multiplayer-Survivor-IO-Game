@@ -238,6 +238,7 @@ func die():
 		Multihelper.showSpawnUI.rpc_id(peerId)
 
 func dropInventory():
+	# Error, if player died
 	var inventoryDict = Inventory.inventories[name]
 	for item in inventoryDict.keys():
 		Items.spawnPickups(item, position, inventoryDict[item])

@@ -38,6 +38,7 @@ func getNavigableTiles(playerId, minR, maxR):
 func getNRandomNavigableTileInPlayerRadius(playerId, n, minR, maxR) -> Array:
 	if !tilemap:
 		return []
+	# dont take affect if null
 	var tiles = getNavigableTiles(playerId, minR, maxR)
 	var randomPositions := []
 	if tiles.is_empty():
