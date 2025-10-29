@@ -13,10 +13,12 @@ signal player_disconnected(id: int)
 signal server_disconnected
 signal player_spawned(peer_id, player_info)
 signal player_registered
-@warning_ignore("unused_signal")
-signal player_score_updated
 signal data_loaded
+
+@warning_ignore_start("unused_signal")
 signal terrain_generated
+signal player_score_updated
+@warning_ignore_restore("unused_signal")
 
 const PORT = Constants.PORT
 const DEFAULT_SERVER_IP = Constants.SERVER_IP
