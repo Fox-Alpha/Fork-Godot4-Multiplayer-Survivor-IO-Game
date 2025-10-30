@@ -282,6 +282,7 @@ point_count = 2
 
 [node name="Player" type="CharacterBody2D" groups=["damageable", "player"]]
 collision_mask = 129
+motion_mode = 1
 script = ExtResource("1_script")
 
 [node name="MovingParts" type="Node2D" parent="."]
