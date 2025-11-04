@@ -4,6 +4,13 @@ extends Node2D
 @export_category("Map Size Settings")
 @export var map_width = 64
 @export var map_height = 64
+const MAPRATIO : float = 1.7778
+####
+# Auflösung von 1280 * 720
+# Verhältnos von 16 : 9 ~ 1,7778
+# Tilesize von 64 * 64
+# 20 * 12 tiles oder 1280 * 768
+####
 
 var tileset_source = 1  # This matches the source ID in the tileset
 
@@ -88,6 +95,8 @@ func _ready():
 	# Only generate if we're the server
 	if multiplayer.is_server():
 		print("Server generating initial map")
+		print("Snapped 4096 im Verhältnos 16:9 (1,7778): ", snapped(1280, 1.7778))
+		
 		generateMap()
 	else:
 		print("Client waiting for map data")
