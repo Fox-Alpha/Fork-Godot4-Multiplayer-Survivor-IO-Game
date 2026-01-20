@@ -30,6 +30,6 @@ func _on_next_character_button_pressed():
 	setActiveCharacter()
 
 func setActiveCharacter():
-	if OS.has_feature("editor"):
-		selectedCharacterIndex = 2
+	#if OS.has_feature("editor"):
+		#selectedCharacterIndex = 2
 	%selectedBody.texture = load(charactersFolder+str(selectedCharacterIndex)+".png")
