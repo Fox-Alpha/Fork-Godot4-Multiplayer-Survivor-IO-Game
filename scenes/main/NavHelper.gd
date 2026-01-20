@@ -25,12 +25,12 @@ const WALKABLE_TILES = [Vector2i(0, 0), Vector2i(1, 0), Vector2i(2, 0), Vector2i
 const MIN_DISTANCE = 8  # Minimum distance in tiles
 const MAX_DISTANCE = 9  # Maximum distance in tiles
 
-func getNavigableTiles(playerId, minR, maxR):
+func getNavigableTiles(playerId, minR, maxR)  -> Array:
 	if !tilemap:
-		return
+		return Array()
 	var player = $"../Players".get_node_or_null(str(playerId))
 	if !player:
-		return
+		return Array()
 	var player_tile_pos = tilemap.local_to_map(player.global_position)
 	var walkable_tiles = get_walkable_tiles_in_distance(player_tile_pos, minR, maxR)
 	return walkable_tiles
@@ -39,7 +39,7 @@ func getNRandomNavigableTileInPlayerRadius(playerId, n, minR, maxR) -> Array:
 	if !tilemap:
 		return []
 	# dont take affect if null
-	var tiles = getNavigableTiles(playerId, minR, maxR)
+	var tiles := getNavigableTiles(playerId, minR, maxR)
 	var randomPositions := []
 	if tiles.is_empty():
 		return []
