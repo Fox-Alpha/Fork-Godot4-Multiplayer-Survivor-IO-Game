@@ -38,6 +38,6 @@ func _On_ChildEnteredTree(node : Node) -> void:
 		print("Game::_On_ChildEnteredTree() => ", node.name)
 
 
-func _On_LevelEnteredTree(node : Node) -> void: 
+func _On_LevelEnteredTree(node : Node) -> void:
 	print("Game::_On_LevelEnteredTree() => ", node.name)
 	pass

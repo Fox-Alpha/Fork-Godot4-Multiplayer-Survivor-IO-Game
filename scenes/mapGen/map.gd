@@ -96,7 +96,7 @@ func _ready():
 	if multiplayer.is_server():
 		print("Server generating initial map")
 		print("Snapped 4096 im Verhältnos 16:9 (1,7778): ", snapped(1280, 1.7778))
-		
+
 		generateMap()
 	else:
 		print("Client waiting for map data")

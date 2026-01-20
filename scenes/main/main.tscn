@@ -61,7 +61,7 @@ _spawnable_scenes = PackedStringArray("uid://ckcl60ixuavyq", "uid://c574wa7os4la
 spawn_path = NodePath("../Projectiles")
 
 [node name="ObjectSpawner" type="MultiplayerSpawner" parent="."]
-_spawnable_scenes = PackedStringArray("res://scenes/object/breakable.tscn")
+_spawnable_scenes = PackedStringArray("uid://bdtda32w7m2g2")
 spawn_path = NodePath("../Objects")
 
 [node name="PickupSpawner" type="MultiplayerSpawner" parent="."]

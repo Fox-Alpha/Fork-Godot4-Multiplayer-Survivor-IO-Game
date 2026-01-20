@@ -1,7 +1,7 @@
-[gd_scene load_steps=10 format=3]
+[gd_scene load_steps=10 format=3 uid="uid://bdtda32w7m2g2"]
 
-[ext_resource type="Script" path="res://scenes/object/breakable.gd" id="1_script"]
-[ext_resource type="Texture2D" path="res://assets/objects/tree1.png" id="2_tree"]
+[ext_resource type="Script" uid="uid://8toa6cwovug4" path="res://scenes/object/breakable.gd" id="1_script"]
+[ext_resource type="Texture2D" uid="uid://i17mwgyr2rqe" path="res://assets/objects/tree1.png" id="2_tree"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_sene2"]
 radius = 48.8365
@@ -80,9 +80,9 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_7kmhu"]
 _data = {
-"break": SubResource("Animation_5e8ow"),
-"shake": SubResource("Animation_hgntg"),
-"spawn": SubResource("Animation_pvay5")
+&"break": SubResource("Animation_5e8ow"),
+&"shake": SubResource("Animation_hgntg"),
+&"spawn": SubResource("Animation_pvay5")
 }
 
 [sub_resource type="Curve" id="Curve_2he1d"]
@@ -103,13 +103,13 @@ replication_config = SubResource("SceneReplicationConfig_a5lig")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
-"": SubResource("AnimationLibrary_7kmhu")
+&"": SubResource("AnimationLibrary_7kmhu")
 }
 autoplay = "spawn"
 
 [node name="hitParticle" type="CPUParticles2D" parent="."]
 emitting = false
-lifetime = 0.7
+lifetime = 0.8
 one_shot = true
 explosiveness = 1.0
 randomness = 1.0
@@ -122,6 +122,6 @@ angular_velocity_min = -270.32
 angular_velocity_max = 442.41
 angle_min = -277.6
 angle_max = 268.9
-scale_amount_max = 4.0
+scale_amount_max = 10.0
 scale_amount_curve = SubResource("Curve_2he1d")
 color = Color(0.239216, 0.764706, 0.294118, 1)

@@ -14,7 +14,7 @@ var data := {}
 var hp = 40
 var spawner : Node2D
 var loaded = false
-	
+
 func getDamage(causer, amount, type):
 	if !loaded:
 		return
